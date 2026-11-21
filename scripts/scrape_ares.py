@@ -5,8 +5,8 @@ Run by GitHub Actions every 10 minutes.
 import base64, datetime as dt, json, os, sys, urllib.parse, urllib.request, http.cookiejar
 
 BASE = os.environ.get('ARES_BASE', 'http://ares.jumor.cn')
-USER = os.environ.get('ARES_USER', 'tzqbwg')
-PWD = os.environ.get('ARES_PASS', 'jumor.cn')
+USER = os.environ.get('ARES_USER')
+PWD = os.environ.get('ARES_PASS')
 OUT_DIR = os.environ.get('OUT_DIR', '.')
 INTERVAL = int(os.environ.get('INTERVAL', '600'))
 MON = os.path.join(OUT_DIR, 'monitor.json')
@@ -155,6 +155,9 @@ def pull_once():
 
 def login():
     global OPENER
+    if not USER or not PWD:
+        log('missing ARES_USER / ARES_PASS secret')
+        return False
     jar = http.cookiejar.CookieJar()
     OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
     try:
