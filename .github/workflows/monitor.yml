@@ -18,8 +18,8 @@ jobs:
           python-version: '3.11'
       - name: fetch ares
         env:
-          ARES_USER: tzqbwg
-          ARES_PASS: jumor.cn
+          ARES_USER: ${{ secrets.ARES_USER }}
+          ARES_PASS: ${{ secrets.ARES_PASS }}
         run: python scripts/scrape_ares.py
       - name: commit
         run: |
